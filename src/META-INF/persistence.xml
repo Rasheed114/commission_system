@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="commission_systemPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>commission_system.objects.Bills</class>
+    <class>commission_system.objects.BillView</class>
+    <class>Bills.java</class>
+    <class>commission_system.objects.Dealer</class>
+    <class>commission_system.objects.BillProductDetails</class>
+    <class>commission_system.objects.ConstantsTb</class>
+    <class>commission_system.objects.Drivers</class>
+    <class>commission_system.objects.Farmer</class>
+    <class>commission_system.objects.Product</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/Comession_DB;create=true;"/>
+      <property name="javax.persistence.jdbc.user" value="comession"/>
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+      <property name="javax.persistence.jdbc.password" value="master"/>
+    </properties>
+  </persistence-unit>
+</persistence>
