@@ -14,9 +14,15 @@ import commission_system.controllers.DealerJpaController;
 import commission_system.objects.BillProductDetails;
 import commission_system.objects.Bills;
 import commission_system.objects.Dealer;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Insets;
+import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
@@ -39,10 +45,16 @@ import javax.swing.table.DefaultTableModel;
 import java.text.*;
 import java.awt.print.*;
 import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
 import javax.swing.Icon;
+import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
+import javax.swing.text.DefaultCaret;
 import static javax.swing.text.DefaultEditorKit.downAction;
 import static jdk.nashorn.internal.objects.NativeRegExp.source;
 
@@ -60,7 +72,10 @@ public class newBill_Page extends javax.swing.JFrame {
     private Icon myIcon2;
     private Icon myIcon3;
     private Icon myIcon4;
-
+    
+    private KeyStroke tab  = KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0);
+    private KeyStroke enter = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
+    private InputMap im ;
     public int getBillNum() {
         return billNum;
     }
@@ -105,7 +120,18 @@ public class newBill_Page extends javax.swing.JFrame {
     public BigDecimal getDealer_id() {
         return dealer_id;
     }
+    
+    public void setBillID(BigDecimal driver_id) {
+        this.bill_id = bill_id;
+    }
 
+        public void setBill_Name(String dealerName) {
+        this.bill_name = bill_name;
+    }
+    public BigDecimal getBillID() {
+        return bill_id;
+    }
+    
     public JTextField getDealer_name() {
         return dealer_name;
     }
@@ -129,7 +155,58 @@ public class newBill_Page extends javax.swing.JFrame {
     public void setjTable1(JTable jTable1) {
         this.jTable1 = jTable1;
     }
+    
+   
+    
+    
+    
+    /*
+public static class Printer implements Printable {
+    final Component comp;
 
+    public Printer(Component comp){
+        this.comp = comp;
+    }
+
+        private Printer() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+    @Override
+    public int print(Graphics g, PageFormat format, int page_index) 
+            throws PrinterException {
+        if (page_index > 0) {
+            return Printable.NO_SUCH_PAGE;
+        }
+
+        // get the bounds of the component 
+        Dimension dim = comp.getSize();
+        double cHeight = dim.getHeight();
+        double cWidth = dim.getWidth();
+
+        // get the bounds of the printable area
+        double pHeight = format.getImageableHeight();
+        double pWidth = format.getImageableWidth();
+
+        double pXStart = format.getImageableX();
+        double pYStart = format.getImageableY();
+
+        double xRatio = pWidth / cWidth;
+        double yRatio = pHeight / cHeight;
+
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.translate(pXStart, pYStart);
+        g2.scale(xRatio, yRatio);
+        comp.paint(g2);
+
+        return Printable.PAGE_EXISTS;
+    }
+    
+    
+}
+*/
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -166,6 +243,7 @@ public class newBill_Page extends javax.swing.JFrame {
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        Bill_Search = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -177,6 +255,14 @@ public class newBill_Page extends javax.swing.JFrame {
             }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
+            }
+        });
+
+        jPanel1.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+                jPanel1CaretPositionChanged(evt);
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
 
@@ -243,7 +329,7 @@ public class newBill_Page extends javax.swing.JFrame {
         });
         issue_date.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                issue_dateKeyPressed(evt);
+                is_dateKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 issue_dateKeyReleased(evt);
@@ -401,19 +487,29 @@ public class newBill_Page extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/leftarrow.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon("C:\\Users\\rashe\\OneDrive\\Desktop\\Capt3113ure.PNG")); // NOI18N
         jButton3.setBorder(null);
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assests/rightarrow.png"))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon("C:\\Users\\rashe\\OneDrive\\Desktop\\Capt33ure.PNG")); // NOI18N
         jButton4.setBorder(null);
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
+            }
+        });
+
+        Bill_Search.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Bill_Search.setText("بحث فواتير");
+        Bill_Search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Bill_SearchActionPerformed(evt);
             }
         });
 
@@ -424,58 +520,64 @@ public class newBill_Page extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(972, 972, 972))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1051, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(ref_num)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(bill_num)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(issue_date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(10, 10, 10)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(507, 507, 507)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(driver_name, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(dealer_name, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(83, 83, 83)
-                                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(972, 972, 972))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(ref_num)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(bill_num)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(issue_date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGap(10, 10, 10)))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(507, 507, 507)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(dealer_name)
+                                    .addComponent(driver_name, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(9, 9, 9)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(83, 83, 83)
+                                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(24, 24, 24)
+                                        .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(100, 100, 100)
+                                        .addComponent(jButton3)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(printRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(save_bill, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                                        .addComponent(jButton4)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(printRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 151, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(Bill_Search, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(68, 68, 68)
+                                        .addComponent(save_bill, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -514,20 +616,23 @@ public class newBill_Page extends javax.swing.JFrame {
                         .addGap(46, 46, 46)
                         .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(save_bill, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(save_bill, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Bill_Search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(printRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(30, 30, 30)
                                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addGap(69, 69, 69))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton4)))))
+                .addGap(98, 98, 98))
         );
 
         issue_date.setDate(new Date());
@@ -566,7 +671,7 @@ public class newBill_Page extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 11, Short.MAX_VALUE)
+                .addGap(0, 9, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -597,22 +702,37 @@ public class newBill_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowActivated
 
     private void printRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printRecordActionPerformed
-        // TODO add your handling code here:
-
-        //       printRecord(jPanel1);
-
-        MessageFormat heade = new MessageFormat ("Report Print");
-
-        MessageFormat footer = new MessageFormat ("Page{0,number,integer}");
-
-        try {
-
-            jTable1.print(JTable.PrintMode.NORMAL, heade, footer);
-
-        } catch (java.awt.print.PrinterException e){
-
-            System.err.format("Cannot Print %s%n",e.getMessage());
-
+        
+            PrinterJob job = PrinterJob.getPrinterJob();
+            job.setJobName("Print Data");
+            
+            job.setPrintable(new Printable(){
+                
+                public int print (Graphics pg,PageFormat pf,int pageNum){
+                
+                pf.setOrientation(PageFormat.LANDSCAPE);
+                
+                if(pageNum>0){
+                return Printable.NO_SUCH_PAGE;
+                
+                }
+                
+                java.awt.Graphics2D g2 = (java.awt.Graphics2D)pg;
+                g2.translate(pf.getImageableX(),pf.getImageableY());
+                g2.scale(.25,0.37);
+                jPanel1.paint(g2);
+                
+                return Printable.PAGE_EXISTS;
+                
+                }
+    });
+            
+        boolean ok = job.printDialog();
+        if(ok){
+            try{
+                job.print();
+            }
+            catch(PrinterException ex){}
         }
 
     }//GEN-LAST:event_printRecordActionPerformed
@@ -739,7 +859,7 @@ public class newBill_Page extends javax.swing.JFrame {
     private void driver_nameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_driver_nameKeyPressed
          int key=evt.getKeyCode();
               if(key==10)
-              ref_num.requestFocus();
+              issue_date.requestFocus();
     }//GEN-LAST:event_driver_nameKeyPressed
 
     private void driver_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_driver_nameActionPerformed
@@ -762,18 +882,7 @@ public class newBill_Page extends javax.swing.JFrame {
         dealers.setVisible(true);
     }//GEN-LAST:event_dealer_nameActionPerformed
 
-    private void issue_dateKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_issue_dateKeyReleased
-        // TODO add your handling code here:
-        //   int key=evt.getKeyCode();
-        //   if(key==10)
-        //   ref_num.requestFocus();
-    }//GEN-LAST:event_issue_dateKeyReleased
-
-    private void issue_dateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_issue_dateKeyPressed
-        // TODO add your handling code here:
-          
-    }//GEN-LAST:event_issue_dateKeyPressed
-
+    
     private void jTable1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyTyped
         // TODO add your handling code here:
         
@@ -788,22 +897,42 @@ public class newBill_Page extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable1KeyReleased
 
+   
+    
+    
+    
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
         // TODO add your handling code here:
-
-
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-
             int selectedColumn = jTable1.getSelectedColumn();
             int selectedRow = jTable1.getSelectedRow();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            
+             im = jTable1.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+            
+            
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 
+//           if(selectedColumn >= jTable1.getColumnCount() - 1){
+//                im.put(enter, im.get(enter)); 
+//            
+//            }
+            
+//             KeyStroke tab  = KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0);
+//             KeyStroke enter = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
+           
+
+
+
+            
             if (selectedColumn == jTable1.getColumnCount() - 1) {
 
                 try {
-                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                    
+                    im.put(enter, im.get(tab));
 
                     //CALCULATE TOTAL PRICE FOR SINGLE ITEM
-                    int sum = Integer.parseInt(model.getValueAt(selectedRow, 4) != null ? model.getValueAt(selectedRow, 4).toString() : "0") * Integer.parseInt(model.getValueAt(selectedRow, 5) != null ? model.getValueAt(selectedRow, 5).toString() : "0");
+                    int sum = Integer.parseInt(model.getValueAt(selectedRow, 4) != null ? model.getValueAt(selectedRow, 4).toString() : "0")
+                            * Integer.parseInt(model.getValueAt(selectedRow, 5) != null ? model.getValueAt(selectedRow, 5).toString() : "0");
                     model.setValueAt(sum + "", selectedRow, selectedColumn - 1);
 
                     //CALCULATE CURRENT BALANCE
@@ -815,18 +944,26 @@ public class newBill_Page extends javax.swing.JFrame {
                     //ADD NEW EMPTAY ROW
                     Object[] row = {null, null, null, null, null, null, null, null};
                     model.addRow(row);
-
+                    
                    //  System.out.println(model.getRowCount());
                    
-                    jTable1.editCellAt(model.getRowCount() - 1, 0);
-                    jTable1.setColumnSelectionInterval(0, 0);
-                    jTable1.setRowSelectionInterval(model.getRowCount(), model.getRowCount());
-                
-                 
-                } catch (Exception e) {
+                   jTable1.scrollRectToVisible(jTable1.getCellRect(jTable1.getRowCount()-1, 0, true));
+                    
+                   jTable1.setColumnSelectionInterval(0, 0);// select first column at first index
+
+                   jTable1.editCellAt(model.getRowCount() - 1, 0);
+                   jTable1.setRowSelectionInterval(model.getRowCount(), model.getRowCount());
+
+                 } catch (Exception e) {
                 }//
 
-            }// Insert new row on clicking last column
+            }
+            
+            
+       //            jTable1.editCellAt(model.getRowCount() - 1, x);
+            
+
+            // Insert new row on clicking last column
             if (selectedColumn == 0) {
 
                 ProductList products = new ProductList(this, true);
@@ -843,18 +980,7 @@ public class newBill_Page extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jTable1KeyPressed
-private void createKeybindings(JTable table) {
-table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "Enter");
-    table.getActionMap().put("Enter", new AbstractAction() {
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            //do something on JTable enter pressed
-            
-            
-            
-        }
-    });
-}
+
     private void jTable1CaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTable1CaretPositionChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable1CaretPositionChanged
@@ -927,12 +1053,55 @@ button.setFocusPainted(false);
         
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void issue_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_issue_dateActionPerformed
+    private void jPanel1CaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jPanel1CaretPositionChanged
         // TODO add your handling code here:
         
+    }//GEN-LAST:event_jPanel1CaretPositionChanged
+
+    private void issue_dateKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_issue_dateKeyReleased
+
+        // TODO add your handling code here:
+        //   int key=evt.getKeyCode();
+        //   if(key==10)
+        //   ref_num.requestFocus();
+    }//GEN-LAST:event_issue_dateKeyReleased
+
+    private void is_dateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_is_dateKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            issue_date.setVisible(true);
+
+        }
+        int key=evt.getKeyCode();
+        if(key==10)
+        ref_num.requestFocus();
+
+    }//GEN-LAST:event_is_dateKeyPressed
+
+    private void issue_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_issue_dateActionPerformed
+        // TODO add your handling code here:
+
     }//GEN-LAST:event_issue_dateActionPerformed
- 
+
+    private void Bill_SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bill_SearchActionPerformed
+        // TODO add your handling code here:
+          Bills_List bills = new Bills_List((java.awt.Frame) this, true);
+        bills.setVisible(true);
+        
+        
+        
+    }//GEN-LAST:event_Bill_SearchActionPerformed
+
+    
+    
+    
+    
+    
+    
+    
+    
     /*
+    
     private void printRecord(JPanel panel){
 
     PrinterJob printerJob = PrinterJob.getPrinterJob();
@@ -960,9 +1129,15 @@ panel.paint(graphics2D);
 
 return Printable.PAGE_EXISTS;
     }
-});
+
+        @Override
+        public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    });
 
 boolean returningResult = printerJob.printDialog();
+        boolean returnipngResult = false;
 
 if (returnipngResult){
 try
@@ -982,8 +1157,8 @@ try
 
 
 
-    */
     
+   */ 
     /**
      * @param args the command line arguments
      */
@@ -1030,6 +1205,7 @@ try
     
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Bill_Search;
     private javax.swing.JTextField bill_num;
     private javax.swing.JLabel current_balance;
     private javax.swing.JLabel current_balance_value;
@@ -1061,9 +1237,8 @@ try
     private javax.swing.JTextField ref_num;
     private javax.swing.JButton save_bill;
     // End of variables declaration//GEN-END:variables
- 
 
-
+  
 
 
 }
