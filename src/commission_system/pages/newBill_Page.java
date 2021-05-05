@@ -76,6 +76,8 @@ public class newBill_Page extends javax.swing.JFrame {
     private KeyStroke tab  = KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0);
     private KeyStroke enter = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
     private InputMap im ;
+    private BigDecimal bill_id;
+    private String bill_name;
     public int getBillNum() {
         return billNum;
     }
@@ -121,11 +123,11 @@ public class newBill_Page extends javax.swing.JFrame {
         return dealer_id;
     }
     
-    public void setBillID(BigDecimal driver_id) {
+    public void setBillID(BigDecimal bill_id) {
         this.bill_id = bill_id;
     }
 
-        public void setBill_Name(String dealerName) {
+        public void setBill_Name(String bill_name) {
         this.bill_name = bill_name;
     }
     public BigDecimal getBillID() {
