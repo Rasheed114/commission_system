@@ -78,13 +78,6 @@ public class newBill_Page extends javax.swing.JFrame {
     private InputMap im ;
     private BigDecimal bill_id;
     private String bill_name;
-    public int getBillNum() {
-        return billNum;
-    }
-
-    public void setBillNum(int billNum) {
-        this.billNum = billNum;
-    }
 
     public JTextField getBill_num() {
         return bill_num;
@@ -136,6 +129,10 @@ public class newBill_Page extends javax.swing.JFrame {
     
     public JTextField getDealer_name() {
         return dealer_name;
+    }
+    
+    public String getBillName() {
+        return bill_name;
     }
 
     public JTextField getDriver_name() {

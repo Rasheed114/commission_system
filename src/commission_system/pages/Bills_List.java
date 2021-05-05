@@ -129,7 +129,7 @@ String BillName = "", BillID = "";
         this.BillName = (String) jTable1.getModel().getValueAt(selectedRow, 1);
 
         if (newBill != null) {
- //           newBill.getBillName().setText(BillName);
+            newBill.getBillName().setText(BillName);
             newBill.setBillID(new BigDecimal(this.BillID));
 
         }
@@ -145,7 +145,7 @@ String BillName = "", BillID = "";
         return BillID;
     }
 
-    public void setBillID(String dealerID) {
+    public void setBillID(String BillID) {
         this.BillID = BillID;
     }
 
@@ -154,7 +154,7 @@ String BillName = "", BillID = "";
     }
 
     
-    public void setBillName(String dealerName) {
+    public void setBillName(String BillName) {
         this.BillName = BillName;
     }
     
